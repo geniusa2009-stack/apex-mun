@@ -1,0 +1,12 @@
+{
+  "name": "apex-mun-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Apex MUN 2026 — static site + secure registration API (Vercel serverless).",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "googleapis": "^144.0.0"
+  }
+}
