@@ -1235,9 +1235,11 @@
     toggleSubmitting(true);
 
     try {
-      // plain FormData, not JSON — Make.com's webhook trigger reads this fine
-      const res = await fetch(registrationForm.action, { method: 'POST', body: formData });
-      if (!res.ok) throw new Error('Submission failed. Please try again.');
+      // no-cors: Make.com's webhook doesn't send CORS headers back, so we
+      // can't read the response — just fire the request. A thrown error here
+      // means the network request itself failed (offline, DNS, etc.), not a
+      // non-2xx status, since opaque responses hide the real status code.
+      await fetch(registrationForm.action, { method: 'POST', mode: 'no-cors', body: formData });
 
       registrationForm.reset();
       clearFieldErrors();
