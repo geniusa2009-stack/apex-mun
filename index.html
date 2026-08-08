@@ -4,10 +4,23 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Apex MUN 2026 — Official Diplomatic Portal</title>
+<meta name="description" content="Apex MUN 2026 — a fully online Model United Nations program. Apply now to represent your country across our flagship diplomatic summits." />
+<meta property="og:title" content="Apex MUN 2026 — Official Diplomatic Portal" />
+<meta property="og:description" content="A fully online Model United Nations program. Apply now to represent your country." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://apex-mun.vercel.app/" />
+<meta property="og:site_name" content="Apex MUN 2026" />
+<meta property="og:image" content="https://apexmun.info/og-image.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Apex MUN 2026 — Official Diplomatic Portal" />
+<meta name="twitter:description" content="A fully online Model United Nations program. Apply now to represent your country." />
+<meta name="twitter:image" content="https://apexmun.info/og-image.jpg" />
+<meta name="theme-color" content="#050a1f" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Cinzel:wght@500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6Ld5DXwtAAAAAIJzktyePesVmilNqjdJE-Etsx8F"></script>
 <script>
   tailwind.config = {
     theme: {
@@ -548,6 +561,197 @@
     transform: translate(-50%, 0);
   }
 
+  /* =========================================================
+     NEWS TICKER
+  ========================================================= */
+  .news-ticker {
+    position: fixed;
+    top: 72px;
+    left: 0;
+    right: 0;
+    z-index: 90;
+    background: rgba(212, 175, 55, 0.1);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.22);
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 7px 0;
+  }
+  .news-ticker-track {
+    display: inline-block;
+    padding-left: 100%;
+    animation: ticker-scroll 32s linear infinite;
+    font-size: 0.78rem;
+    letter-spacing: 0.03em;
+    color: var(--gold-light);
+  }
+  .news-ticker-track span.sep { margin: 0 2.2em; color: rgba(212,175,55,0.5); }
+  @keyframes ticker-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+  }
+  body.has-ticker .navbar + .hero,
+  body.has-ticker main { margin-top: 0; }
+  body.has-ticker .hero { padding-top: 34px; }
+
+  /* =========================================================
+     WHATSAPP FLOATING BUTTON
+  ========================================================= */
+  .whatsapp-fab {
+    position: fixed;
+    bottom: 26px;
+    right: 22px;
+    z-index: 500;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #25D366;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: 0 10px 30px -8px rgba(0,0,0,0.6), 0 0 0 0 rgba(37,211,102,0.6);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    animation: wa-pulse 2.6s ease-in-out infinite;
+  }
+  .whatsapp-fab:hover { transform: scale(1.08); }
+  @keyframes wa-pulse {
+    0%, 100% { box-shadow: 0 10px 30px -8px rgba(0,0,0,0.6), 0 0 0 0 rgba(37,211,102,0.55); }
+    50% { box-shadow: 0 10px 30px -8px rgba(0,0,0,0.6), 0 0 0 10px rgba(37,211,102,0); }
+  }
+  [dir="rtl"] .whatsapp-fab { right: auto; left: 22px; }
+
+  /* =========================================================
+     MOBILE BOTTOM NAV
+  ========================================================= */
+  .bottom-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 400;
+    background: rgba(5, 10, 31, 0.92);
+    backdrop-filter: blur(16px);
+    border-top: 1px solid rgba(212, 175, 55, 0.2);
+    padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+  }
+  .bottom-nav-inner {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .bottom-nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    color: var(--silver);
+    font-size: 0.62rem;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    opacity: 0.75;
+    transition: opacity 0.2s ease, color 0.2s ease;
+  }
+  .bottom-nav a i { font-size: 1.05rem; }
+  .bottom-nav a.active, .bottom-nav a:hover { opacity: 1; color: var(--gold-light); }
+  @media (max-width: 767px) {
+    .bottom-nav { display: block; }
+    body { padding-bottom: 62px; }
+  }
+
+  /* =========================================================
+     SIMPLE MODAL (Quiz / Privacy)
+  ========================================================= */
+  .simple-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 700;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .simple-modal.open { display: flex; }
+  .simple-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(2, 4, 13, 0.82);
+    backdrop-filter: blur(6px);
+  }
+  .simple-modal-card {
+    position: relative;
+    max-width: 560px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    background: #0a1330;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 24px;
+    padding: 34px 30px;
+    box-shadow: 0 40px 90px -30px rgba(0,0,0,0.8), 0 0 60px -20px rgba(212,175,55,0.2);
+  }
+
+  /* =========================================================
+     ACCORDION (FAQ)
+  ========================================================= */
+  .faq-item { border: 1px solid rgba(212,175,55,0.2); border-radius: 16px; overflow: hidden; margin-bottom: 12px; background: rgba(255,255,255,0.02); }
+  .faq-question {
+    width: 100%;
+    text-align: left;
+    padding: 18px 22px;
+    background: none;
+    border: none;
+    color: var(--gold-light);
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 0.92rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+  [dir="rtl"] .faq-question { text-align: right; }
+  .faq-question .chev { transition: transform 0.25s ease; color: var(--gold); }
+  .faq-item.open .faq-question .chev { transform: rotate(180deg); }
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding: 0 22px;
+    color: var(--silver);
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+  .faq-item.open .faq-answer { padding-bottom: 18px; }
+
+  /* =========================================================
+     RTL / ARABIC SUPPORT
+  ========================================================= */
+  [dir="rtl"] body { font-family: 'Jost', 'Tahoma', sans-serif; }
+  [dir="rtl"] .nav-links, [dir="rtl"] .nav-right { direction: rtl; }
+  [dir="rtl"] .footer-links a, [dir="rtl"] .faq-answer, [dir="rtl"] .faq-question { direction: rtl; }
+  [lang-target="ar"] { display: none; }
+  [dir="rtl"] [lang-target="ar"] { display: inline; }
+  [dir="rtl"] [lang-target="en"] { display: none; }
+
+  .lang-toggle, .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid rgba(212,175,55,0.35);
+    color: var(--gold-light);
+    background: rgba(255,255,255,0.03);
+    font-size: 0.72rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .lang-toggle:hover, .theme-toggle:hover { border-color: var(--gold); transform: translateY(-1px); }
+
 </style>
 </head>
 <body>
@@ -568,6 +772,7 @@
     </nav>
 
     <div class="nav-right">
+      <button type="button" class="lang-toggle" id="langToggle" aria-label="Switch language" title="EN / AR">EN</button>
       <a href="#" class="btn-register" id="navRegister">Register</a>
       <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
         <span></span><span></span><span></span>
@@ -581,6 +786,21 @@
     <a href="#" class="btn-register" id="navRegisterMobile">Register</a>
   </div>
 </header>
+
+<!-- =========================================================
+     NEWS TICKER
+========================================================= -->
+<div class="news-ticker" id="newsTicker">
+  <div class="news-ticker-track">
+    <span lang-target="en">🏆 Registration for the Spring Summit — Global Security is now open</span><span lang-target="ar">🏆 التسجيل مفتوح الآن لقمة الربيع — الأمن العالمي</span>
+    <span class="sep">•</span>
+    <span lang-target="en">📅 Applications close soon — apply today to secure your seat</span><span lang-target="ar">📅 التقديم هيقفل قريبًا — سجّل النهاردة عشان تضمن مكانك</span>
+    <span class="sep">•</span>
+    <span lang-target="en">🎓 In partnership with Levely Group &amp; the UWC Scholarship Program</span><span lang-target="ar">🎓 بالتعاون مع مجموعة Levely وبرنامج منح UWC</span>
+    <span class="sep">•</span>
+    <span lang-target="en">🏆 Registration for the Spring Summit — Global Security is now open</span><span lang-target="ar">🏆 التسجيل مفتوح الآن لقمة الربيع — الأمن العالمي</span>
+  </div>
+</div>
 
 <!-- =========================================================
      HERO
@@ -762,6 +982,277 @@
           </div>
         </div>
       </div>
+
+      <!-- ============================================================
+           SAVE THE DATE
+      ============================================================ -->
+      <div class="mt-28 md:mt-36 reveal">
+        <div class="rounded-3xl border border-gold/30 bg-gradient-to-br from-gold/10 via-white/[0.02] to-transparent p-8 md:p-12 text-center">
+          <p class="font-serif2 font-semibold tracking-[0.4em] text-gold text-xs md:text-sm mb-3">
+            <span lang-target="en">— Save the Date —</span><span lang-target="ar">— احجز الموعد —</span>
+          </p>
+          <h3 class="font-display font-semibold text-2xl md:text-3xl text-gold-light mb-3">
+            <span lang-target="en">Spring Summit — Global Security</span><span lang-target="ar">قمة الربيع — الأمن العالمي</span>
+          </h3>
+          <p class="text-silver/70 max-w-lg mx-auto">
+            <span lang-target="en">Applications close soon. Secure your seat as a delegate before registration ends.</span>
+            <span lang-target="ar">التقديم هيقفل قريبًا. احجز مكانك كمندوب قبل ما التسجيل يقفل.</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           MEET THE TEAM
+      ============================================================ -->
+      <div class="mt-28 md:mt-36">
+        <p class="text-center font-serif2 font-semibold tracking-[0.4em] text-gold text-xs md:text-sm mb-4">
+          <span lang-target="en">— The Organizers —</span><span lang-target="ar">— المنظمون —</span>
+        </p>
+        <h2 class="text-center font-display font-semibold text-4xl md:text-5xl text-gold-light mb-14">
+          <span lang-target="en">Meet the Team</span><span lang-target="ar">تعرف على الفريق</span>
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <div class="reveal rounded-2xl border border-white/10 bg-white/[0.02] p-7 text-center hover:border-gold/40 transition">
+            <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-gold/40 to-gold-light/20 flex items-center justify-center text-2xl font-display font-semibold text-navy-deep">MA</div>
+            <h4 class="font-display font-semibold text-white mb-1">Moaz Ayman</h4>
+            <p class="text-xs uppercase tracking-wider text-gold/80"><span lang-target="en">Co-Founder &amp; Secretary-General</span><span lang-target="ar">شريك مؤسس والأمين العام</span></p>
+          </div>
+          <div class="reveal rounded-2xl border border-white/10 bg-white/[0.02] p-7 text-center hover:border-gold/40 transition">
+            <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-gold/40 to-gold-light/20 flex items-center justify-center text-2xl font-display font-semibold text-navy-deep">AI</div>
+            <h4 class="font-display font-semibold text-white mb-1">Ahmed Ibrahim</h4>
+            <p class="text-xs uppercase tracking-wider text-gold/80"><span lang-target="en">Co-Founder &amp; Director of Operations</span><span lang-target="ar">شريك مؤسس ومدير العمليات</span></p>
+          </div>
+          <div class="reveal rounded-2xl border border-white/10 bg-white/[0.02] p-7 text-center hover:border-gold/40 transition">
+            <div class="w-20 h-20 mx-auto mb-4 rounded-full bg-gradient-to-br from-gold/40 to-gold-light/20 flex items-center justify-center text-2xl font-display font-semibold text-navy-deep">LG</div>
+            <h4 class="font-display font-semibold text-white mb-1">Levely Group</h4>
+            <p class="text-xs uppercase tracking-wider text-gold/80"><span lang-target="en">Founding Partner &amp; Scholarship Advisory</span><span lang-target="ar">شريك مؤسس واستشاري المنح</span></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           OUR PARTNERS / SPONSORS
+      ============================================================ -->
+      <div class="mt-28 md:mt-36">
+        <p class="text-center font-serif2 font-semibold tracking-[0.4em] text-gold text-xs md:text-sm mb-4">
+          <span lang-target="en">— Working Together —</span><span lang-target="ar">— بنشتغل مع بعض —</span>
+        </p>
+        <h2 class="text-center font-display font-semibold text-4xl md:text-5xl text-gold-light mb-6">
+          <span lang-target="en">Our Partners</span><span lang-target="ar">شركاؤنا</span>
+        </h2>
+        <p class="text-center text-silver/70 max-w-xl mx-auto mb-12 leading-relaxed">
+          <span lang-target="en">Apex MUN is proud to collaborate with the following organizations. Interested in sponsoring or partnering?</span>
+          <span lang-target="ar">Apex MUN فخور بالتعاون مع الجهات دي. عايز تكون راعي أو شريك معانا؟</span>
+          <a href="mailto:apexmun.info@gmail.com?subject=Sponsorship%20Inquiry" class="text-gold hover:text-gold-light underline ml-1"><span lang-target="en">Get in touch</span><span lang-target="ar">تواصل معانا</span></a>
+        </p>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-5 max-w-3xl mx-auto">
+          <div class="reveal h-24 rounded-xl border border-white/10 bg-white/[0.03] flex items-center justify-center text-silver/50 text-xs uppercase tracking-wider text-center px-3">Levely Group</div>
+          <div class="reveal h-24 rounded-xl border border-white/10 bg-white/[0.03] flex items-center justify-center text-silver/50 text-xs uppercase tracking-wider text-center px-3"><span lang-target="en">Ministry of Education</span><span lang-target="ar">وزارة التربية والتعليم</span></div>
+          <div class="reveal h-24 rounded-xl border border-white/10 bg-white/[0.03] flex items-center justify-center text-silver/50 text-xs uppercase tracking-wider text-center px-3"><span lang-target="en">UWC Scholarship</span><span lang-target="ar">منحة UWC</span></div>
+          <div class="reveal h-24 rounded-xl border border-dashed border-gold/30 bg-transparent flex items-center justify-center text-gold/60 text-xs uppercase tracking-wider text-center px-3"><span lang-target="en">Your Logo Here</span><span lang-target="ar">شعارك هنا</span></div>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           PARTICIPATING COUNTRIES (simplified interactive map alternative)
+      ============================================================ -->
+      <div class="mt-28 md:mt-36">
+        <p class="text-center font-serif2 font-semibold tracking-[0.4em] text-gold text-xs md:text-sm mb-4">
+          <span lang-target="en">— Global Reach —</span><span lang-target="ar">— حضور عالمي —</span>
+        </p>
+        <h2 class="text-center font-display font-semibold text-4xl md:text-5xl text-gold-light mb-6">
+          <span lang-target="en">Countries Represented</span><span lang-target="ar">الدول المشاركة</span>
+        </h2>
+        <p class="text-center text-silver/70 max-w-xl mx-auto mb-12 leading-relaxed">
+          <span lang-target="en">Hover a flag to see delegates who represented that country in a previous Apex MUN session.</span>
+          <span lang-target="ar">مرري الماوس على أي علم عشان تشوف المندوبين اللي مثّلوا الدولة دي في نسخة سابقة.</span>
+        </p>
+        <div id="countryGrid" class="flex flex-wrap justify-center gap-4 max-w-3xl mx-auto"></div>
+      </div>
+
+      <!-- ============================================================
+           HALL OF FAME
+      ============================================================ -->
+      <div class="mt-28 md:mt-36">
+        <p class="text-center font-serif2 font-semibold tracking-[0.4em] text-gold text-xs md:text-sm mb-4">
+          <span lang-target="en">— Excellence Recognized —</span><span lang-target="ar">— تكريم التميز —</span>
+        </p>
+        <h2 class="text-center font-display font-semibold text-4xl md:text-5xl text-gold-light mb-14">
+          <span lang-target="en">Hall of Fame</span><span lang-target="ar">لوحة الشرف</span>
+        </h2>
+        <div class="max-w-3xl mx-auto overflow-x-auto rounded-2xl border border-gold/20">
+          <table class="w-full text-sm text-left">
+            <thead class="bg-white/[0.04] text-gold-light uppercase text-xs tracking-wider">
+              <tr>
+                <th class="px-5 py-4"><span lang-target="en">Session</span><span lang-target="ar">النسخة</span></th>
+                <th class="px-5 py-4"><span lang-target="en">Best Delegate</span><span lang-target="ar">أفضل مندوب</span></th>
+                <th class="px-5 py-4"><span lang-target="en">Committee</span><span lang-target="ar">اللجنة</span></th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5 text-silver/75">
+              <tr>
+                <td class="px-5 py-4">July 2026 — Online Pilot</td>
+                <td class="px-5 py-4">Hana Baher</td>
+                <td class="px-5 py-4">UNHRC</td>
+              </tr>
+              <tr>
+                <td class="px-5 py-4">July 2026 — Online Pilot</td>
+                <td class="px-5 py-4">Hana Yaser</td>
+                <td class="px-5 py-4">UNSC</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           RESOURCE HUB
+      ============================================================ -->
+      <div class="mt-28 md:mt-36">
+        <p class="text-center font-serif2 font-semibold tracking-[0.4em] text-gold text-xs md:text-sm mb-4">
+          <span lang-target="en">— Get Prepared —</span><span lang-target="ar">— استعد جيدًا —</span>
+        </p>
+        <h2 class="text-center font-display font-semibold text-4xl md:text-5xl text-gold-light mb-14">
+          <span lang-target="en">Resource Hub</span><span lang-target="ar">مكتبة الموارد</span>
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-3xl mx-auto">
+          <a href="#" class="reveal flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-5 hover:border-gold/40 transition">
+            <i class="fa-solid fa-file-lines text-gold text-xl w-8 text-center"></i>
+            <div>
+              <h4 class="text-white font-semibold text-sm"><span lang-target="en">How to Write a Position Paper</span><span lang-target="ar">إزاي تكتب Position Paper</span></h4>
+              <p class="text-xs text-silver/50 mt-0.5"><span lang-target="en">PDF Guide</span><span lang-target="ar">دليل PDF</span></p>
+            </div>
+          </a>
+          <a href="#" class="reveal flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-5 hover:border-gold/40 transition">
+            <i class="fa-solid fa-gavel text-gold text-xl w-8 text-center"></i>
+            <div>
+              <h4 class="text-white font-semibold text-sm"><span lang-target="en">Rules of Procedure</span><span lang-target="ar">قواعد الإجراءات</span></h4>
+              <p class="text-xs text-silver/50 mt-0.5"><span lang-target="en">PDF Guide</span><span lang-target="ar">دليل PDF</span></p>
+            </div>
+          </a>
+          <a href="#" class="reveal flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-5 hover:border-gold/40 transition">
+            <i class="fa-solid fa-book text-gold text-xl w-8 text-center"></i>
+            <div>
+              <h4 class="text-white font-semibold text-sm"><span lang-target="en">MUN Glossary for Beginners</span><span lang-target="ar">مسرد مصطلحات MUN</span></h4>
+              <p class="text-xs text-silver/50 mt-0.5"><span lang-target="en">PDF Guide</span><span lang-target="ar">دليل PDF</span></p>
+            </div>
+          </a>
+          <a href="#" class="reveal flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-5 hover:border-gold/40 transition">
+            <i class="fa-solid fa-users-viewfinder text-gold text-xl w-8 text-center"></i>
+            <div>
+              <h4 class="text-white font-semibold text-sm"><span lang-target="en">Committee Background Guides</span><span lang-target="ar">أدلة خلفية اللجان</span></h4>
+              <p class="text-xs text-silver/50 mt-0.5"><span lang-target="en">One per committee</span><span lang-target="ar">دليل لكل لجنة</span></p>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           TRAINING VIDEOS
+      ============================================================ -->
+      <div class="mt-28 md:mt-36">
+        <p class="text-center font-serif2 font-semibold tracking-[0.4em] text-gold text-xs md:text-sm mb-4">
+          <span lang-target="en">— Learn the Craft —</span><span lang-target="ar">— اتعلم المهارة —</span>
+        </p>
+        <h2 class="text-center font-display font-semibold text-4xl md:text-5xl text-gold-light mb-14">
+          <span lang-target="en">Training Videos</span><span lang-target="ar">فيديوهات تدريبية</span>
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <div class="reveal rounded-2xl border border-white/10 overflow-hidden bg-white/[0.02]">
+            <div class="aspect-video bg-black/40 flex items-center justify-center text-gold/60"><i class="fa-solid fa-circle-play text-4xl"></i></div>
+            <p class="p-4 text-sm text-silver/70"><span lang-target="en">Public Speaking Basics</span><span lang-target="ar">أساسيات الخطابة</span></p>
+          </div>
+          <div class="reveal rounded-2xl border border-white/10 overflow-hidden bg-white/[0.02]">
+            <div class="aspect-video bg-black/40 flex items-center justify-center text-gold/60"><i class="fa-solid fa-circle-play text-4xl"></i></div>
+            <p class="p-4 text-sm text-silver/70"><span lang-target="en">Negotiation &amp; Lobbying</span><span lang-target="ar">التفاوض والكسب الدبلوماسي</span></p>
+          </div>
+          <div class="reveal rounded-2xl border border-white/10 overflow-hidden bg-white/[0.02]">
+            <div class="aspect-video bg-black/40 flex items-center justify-center text-gold/60"><i class="fa-solid fa-circle-play text-4xl"></i></div>
+            <p class="p-4 text-sm text-silver/70"><span lang-target="en">Writing a Winning Resolution</span><span lang-target="ar">كتابة قرار متميز</span></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           FAQ
+      ============================================================ -->
+      <div class="mt-28 md:mt-36">
+        <p class="text-center font-serif2 font-semibold tracking-[0.4em] text-gold text-xs md:text-sm mb-4">
+          <span lang-target="en">— Questions? —</span><span lang-target="ar">— عندك سؤال؟ —</span>
+        </p>
+        <h2 class="text-center font-display font-semibold text-4xl md:text-5xl text-gold-light mb-14">
+          <span lang-target="en">Frequently Asked Questions</span><span lang-target="ar">الأسئلة الشائعة</span>
+        </h2>
+        <div class="max-w-2xl mx-auto" id="faqList">
+          <div class="faq-item">
+            <button type="button" class="faq-question">
+              <span><span lang-target="en">Is Apex MUN really free to join?</span><span lang-target="ar">هل الاشتراك في Apex MUN مجاني فعلاً؟</span></span>
+              <i class="fa-solid fa-chevron-down chev"></i>
+            </button>
+            <div class="faq-answer">
+              <span lang-target="en">Yes — participation for government school delegates is completely free, in line with our mission to make MUN accessible to everyone.</span>
+              <span lang-target="ar">أيوه — الاشتراك لمندوبي المدارس الحكومية مجاني بالكامل، ده جزء من هدفنا إننا نوصّل الـ MUN لأي طالب.</span>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button type="button" class="faq-question">
+              <span><span lang-target="en">Do I need previous MUN experience?</span><span lang-target="ar">لازم يكون عندي خبرة سابقة في MUN؟</span></span>
+              <i class="fa-solid fa-chevron-down chev"></i>
+            </button>
+            <div class="faq-answer">
+              <span lang-target="en">Not at all. We welcome first-time delegates and provide training resources to help you prepare.</span>
+              <span lang-target="ar">أبدًا. إحنا بنرحب بالمندوبين الجداد وبنوفر مصادر تدريبية تساعدك تستعد كويس.</span>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button type="button" class="faq-question">
+              <span><span lang-target="en">Is the conference online or in person?</span><span lang-target="ar">المؤتمر أونلاين ولا حضوري؟</span></span>
+              <i class="fa-solid fa-chevron-down chev"></i>
+            </button>
+            <div class="faq-answer">
+              <span lang-target="en">Apex MUN is currently fully online via Zoom, with plans to expand to host-school venues in the future.</span>
+              <span lang-target="ar">Apex MUN حاليًا أونلاين بالكامل عبر Zoom، وفيه خطة للتوسع لمدارس مستضيفة في المستقبل.</span>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button type="button" class="faq-question">
+              <span><span lang-target="en">What language is the conference held in?</span><span lang-target="ar">المؤتمر بيتعقد بأي لغة؟</span></span>
+              <i class="fa-solid fa-chevron-down chev"></i>
+            </button>
+            <div class="faq-answer">
+              <span lang-target="en">Sessions are held fully in English. We are studying an Arabic-language track for government schools in the future.</span>
+              <span lang-target="ar">الجلسات بتتعقد بالكامل بالإنجليزية حاليًا، وإحنا بندرس فتح مسار باللغة العربية للمدارس الحكومية مستقبلاً.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           INVITE YOUR SCHOOL
+      ============================================================ -->
+      <div class="mt-28 md:mt-36 mb-8">
+        <div class="rounded-3xl border border-gold/25 bg-white/[0.03] p-8 md:p-12 text-center max-w-2xl mx-auto">
+          <p class="font-serif2 font-semibold tracking-[0.4em] text-gold text-xs md:text-sm mb-3">
+            <span lang-target="en">— Spread the Word —</span><span lang-target="ar">— شارك الفرصة —</span>
+          </p>
+          <h3 class="font-display font-semibold text-2xl md:text-3xl text-gold-light mb-4">
+            <span lang-target="en">Invite Your School</span><span lang-target="ar">ادعُ مدرستك</span>
+          </h3>
+          <p class="text-silver/70 mb-6 leading-relaxed">
+            <span lang-target="en">Know a school that should be part of Apex MUN? Send this ready-made letter to your school principal.</span>
+            <span lang-target="ar">تعرف مدرسة تستاهل تنضم لـ Apex MUN؟ ابعت الخطاب الجاهز ده لمدير مدرستك.</span>
+          </p>
+          <div class="flex flex-col sm:flex-row gap-3 justify-center">
+            <button type="button" id="copyInviteLetterBtn" class="px-6 py-3 rounded-full text-sm font-semibold uppercase tracking-wider bg-gradient-to-r from-gold via-gold-light to-gold text-navy-deep hover:-translate-y-0.5 transition">
+              <span lang-target="en">Copy Invitation Letter</span><span lang-target="ar">نسخ خطاب الدعوة</span>
+            </button>
+            <a id="shareReferralBtn" href="#" class="px-6 py-3 rounded-full text-sm font-semibold uppercase tracking-wider border border-gold/40 text-gold-light hover:border-gold transition cursor-pointer">
+              <span lang-target="en">Copy My Referral Link</span><span lang-target="ar">نسخ رابط الإحالة بتاعي</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -802,6 +1293,42 @@
           <span class="block text-xs uppercase tracking-wider text-gold/85 mb-4">Topic: Protecting the Rights of Climate Refugees and Resource-Driven Conflicts</span>
           <p class="text-sm text-silver/70 leading-relaxed flex-1">Delegates reconcile state sovereignty with universal human dignity, drafting resolutions grounded in legal precision and humanitarian urgency.</p>
         </article>
+      </div>
+
+      <!-- ============================================================
+           INTERACTIVE AGENDA
+      ============================================================ -->
+      <div class="mb-16">
+        <h3 class="text-center font-display font-semibold text-2xl text-gold-light mb-8">
+          <span lang-target="en">Conference Schedule</span><span lang-target="ar">جدول المؤتمر</span>
+        </h3>
+        <div class="max-w-2xl mx-auto space-y-3" id="agendaList">
+          <div class="flex items-center gap-4 rounded-xl border border-white/10 bg-white/[0.02] px-5 py-4">
+            <span class="text-gold font-display font-semibold text-sm w-20 shrink-0">09:00</span>
+            <span class="text-silver/80 text-sm"><span lang-target="en">Opening Ceremony &amp; Delegate Check-in</span><span lang-target="ar">حفل الافتتاح وتسجيل الحضور</span></span>
+          </div>
+          <div class="flex items-center gap-4 rounded-xl border border-white/10 bg-white/[0.02] px-5 py-4">
+            <span class="text-gold font-display font-semibold text-sm w-20 shrink-0">10:00</span>
+            <span class="text-silver/80 text-sm"><span lang-target="en">Committee Session I — General Speakers List</span><span lang-target="ar">الجلسة الأولى — قائمة المتحدثين العامة</span></span>
+          </div>
+          <div class="flex items-center gap-4 rounded-xl border border-white/10 bg-white/[0.02] px-5 py-4">
+            <span class="text-gold font-display font-semibold text-sm w-20 shrink-0">12:30</span>
+            <span class="text-silver/80 text-sm"><span lang-target="en">Break</span><span lang-target="ar">استراحة</span></span>
+          </div>
+          <div class="flex items-center gap-4 rounded-xl border border-white/10 bg-white/[0.02] px-5 py-4">
+            <span class="text-gold font-display font-semibold text-sm w-20 shrink-0">13:00</span>
+            <span class="text-silver/80 text-sm"><span lang-target="en">Committee Session II — Moderated &amp; Unmoderated Caucus</span><span lang-target="ar">الجلسة الثانية — نقاش موجّه وغير موجّه</span></span>
+          </div>
+          <div class="flex items-center gap-4 rounded-xl border border-white/10 bg-white/[0.02] px-5 py-4">
+            <span class="text-gold font-display font-semibold text-sm w-20 shrink-0">16:00</span>
+            <span class="text-silver/80 text-sm"><span lang-target="en">Resolution Drafting &amp; Voting Procedure</span><span lang-target="ar">صياغة القرار والتصويت</span></span>
+          </div>
+          <div class="flex items-center gap-4 rounded-xl border border-white/10 bg-white/[0.02] px-5 py-4">
+            <span class="text-gold font-display font-semibold text-sm w-20 shrink-0">17:30</span>
+            <span class="text-silver/80 text-sm"><span lang-target="en">Closing Ceremony &amp; Awards</span><span lang-target="ar">حفل الختام وتوزيع الجوائز</span></span>
+          </div>
+        </div>
+        <p class="text-center text-xs text-silver/50 mt-6"><span lang-target="en">Schedule shown in Cairo local time (GMT+2) and subject to minor changes.</span><span lang-target="ar">التوقيت بتوقيت القاهرة المحلي (GMT+2) وممكن يتغير بشكل بسيط.</span></p>
       </div>
 
       <div class="text-center">
@@ -873,13 +1400,48 @@
                 </select>
                 <span id="experience-error" class="hidden mt-1.5 block text-xs text-red-300"></span>
               </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="font-display font-semibold text-lg text-gold-light mb-1">Diplomatic Essay Questions</h3>
+            <p class="text-sm text-silver/60 mb-5">Your answers help our committee identify outstanding delegates. Please answer thoughtfully — aim for 40-80 words per question.</p>
+            <div class="space-y-5">
               <div>
-                <label for="essay" class="block text-xs uppercase tracking-wider text-gold/90 mb-2">Diplomatic Perspective Essay</label>
-                <textarea id="essay" name="essay" rows="6" required
-                  placeholder="In 50-100 words, briefly explain your personal stance on an issue you've discussed in previous conferences, or your perspective on your preferred committee topic..."
+                <label for="essay1" class="block text-xs uppercase tracking-wider text-gold/90 mb-2">1. Why do you want to represent your country at Apex MUN, and what makes you a strong diplomatic delegate?</label>
+                <textarea id="essay1" name="essay1" rows="4" required
+                  placeholder="Share your motivation and what sets you apart as a delegate..."
                   class="w-full bg-white/[0.03] border border-gold/25 rounded-xl px-4 py-3 text-white placeholder-silver/35 outline-none transition resize-y focus:border-gold/75 focus:ring-2 focus:ring-gold/15"></textarea>
-                <span class="block mt-2 text-xs text-silver/50">This response is used to evaluate your writing style and diplomatic logic for country allocation.</span>
-                <span id="essay-error" class="hidden mt-1.5 block text-xs text-red-300"></span>
+                <span id="essay1-error" class="hidden mt-1.5 block text-xs text-red-300"></span>
+              </div>
+              <div>
+                <label for="essay2" class="block text-xs uppercase tracking-wider text-gold/90 mb-2">2. Describe a moment you had to negotiate, lead a team, or resolve a disagreement. What did you learn?</label>
+                <textarea id="essay2" name="essay2" rows="4" required
+                  placeholder="Tell us about a real experience and its outcome..."
+                  class="w-full bg-white/[0.03] border border-gold/25 rounded-xl px-4 py-3 text-white placeholder-silver/35 outline-none transition resize-y focus:border-gold/75 focus:ring-2 focus:ring-gold/15"></textarea>
+                <span id="essay2-error" class="hidden mt-1.5 block text-xs text-red-300"></span>
+              </div>
+              <div>
+                <label for="essay3" class="block text-xs uppercase tracking-wider text-gold/90 mb-2">3. What is your personal stance on the topic of your first-choice committee, and how would you approach it diplomatically?</label>
+                <textarea id="essay3" name="essay3" rows="4" required
+                  placeholder="Reflect on the issue your preferred committee will debate..."
+                  class="w-full bg-white/[0.03] border border-gold/25 rounded-xl px-4 py-3 text-white placeholder-silver/35 outline-none transition resize-y focus:border-gold/75 focus:ring-2 focus:ring-gold/15"></textarea>
+                <span id="essay3-error" class="hidden mt-1.5 block text-xs text-red-300"></span>
+              </div>
+              <div>
+                <label for="essay4" class="block text-xs uppercase tracking-wider text-gold/90 mb-2">4. How do you handle opposing viewpoints during a debate or discussion?</label>
+                <textarea id="essay4" name="essay4" rows="4" required
+                  placeholder="Describe your approach to disagreement and persuasion..."
+                  class="w-full bg-white/[0.03] border border-gold/25 rounded-xl px-4 py-3 text-white placeholder-silver/35 outline-none transition resize-y focus:border-gold/75 focus:ring-2 focus:ring-gold/15"></textarea>
+                <span id="essay4-error" class="hidden mt-1.5 block text-xs text-red-300"></span>
+              </div>
+              <div>
+                <label for="essay5" class="block text-xs uppercase tracking-wider text-gold/90 mb-2">5. What do you hope to achieve or learn from participating in this conference?</label>
+                <textarea id="essay5" name="essay5" rows="4" required
+                  placeholder="Share your personal goals for this experience..."
+                  class="w-full bg-white/[0.03] border border-gold/25 rounded-xl px-4 py-3 text-white placeholder-silver/35 outline-none transition resize-y focus:border-gold/75 focus:ring-2 focus:ring-gold/15"></textarea>
+                <span class="block mt-2 text-xs text-silver/50">Your answers above are reviewed by our academic team to evaluate writing style and diplomatic reasoning for delegate selection.</span>
+                <span id="essay5-error" class="hidden mt-1.5 block text-xs text-red-300"></span>
               </div>
             </div>
           </div>
@@ -913,6 +1475,18 @@
             </div>
           </div>
 
+          <div>
+            <h3 class="font-display font-semibold text-lg text-gold-light mb-1">Video Introduction</h3>
+            <p class="text-sm text-silver/60 mb-5">Record a short (1-2 minute) video introducing yourself and why you'd be a great delegate, then paste the link below.</p>
+            <div>
+              <label for="videoLink" class="block text-xs uppercase tracking-wider text-gold/90 mb-2">Video Link (YouTube or Google Drive)</label>
+              <input type="url" id="videoLink" name="videoLink" placeholder="https://youtu.be/... or https://drive.google.com/..." required
+                class="w-full bg-white/[0.03] border border-gold/25 rounded-xl px-4 py-3 text-white placeholder-silver/35 outline-none transition focus:border-gold/75 focus:ring-2 focus:ring-gold/15" />
+              <span class="block mt-2 text-xs text-silver/50">Make sure sharing is set to "Anyone with the link can view" so our committee can watch it.</span>
+              <span id="videoLink-error" class="hidden mt-1.5 block text-xs text-red-300"></span>
+            </div>
+          </div>
+
           <div class="flex justify-end">
             <button type="submit" id="submitBtn" class="pulse-gold min-w-[240px] px-10 py-4 rounded-full font-semibold text-sm uppercase tracking-wider bg-gradient-to-r from-gold via-gold-light to-gold text-navy-deep transition hover:-translate-y-0.5 hover:scale-[1.03] disabled:opacity-60 disabled:pointer-events-none disabled:animate-none flex items-center justify-center gap-2">
               <svg id="submitSpinner" class="hidden animate-spin h-4 w-4 text-navy-deep" viewBox="0 0 24 24" fill="none">
@@ -922,6 +1496,11 @@
               <span id="submitBtnLabel">Submit Official Application</span>
             </button>
           </div>
+          <p class="text-center text-[11px] text-silver/40 leading-relaxed">
+            This site is protected by reCAPTCHA and the Google
+            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" class="underline hover:text-gold-light">Privacy Policy</a> and
+            <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" class="underline hover:text-gold-light">Terms of Service</a> apply.
+          </p>
           <p id="formError" class="hidden text-center text-sm text-red-300">Something went wrong submitting your application. Please try again in a moment.</p>
         </form>
       </div>
@@ -998,8 +1577,86 @@
   <div class="footer-bottom">
     <span>&copy; 2026 Apex MUN. All rights reserved.</span>
     <span>Diplomacy Without Borders.</span>
+    <button type="button" id="openPrivacyBtn" class="underline decoration-gold/40 hover:text-gold-light transition">
+      <span lang-target="en">Privacy Policy</span><span lang-target="ar">سياسة الخصوصية</span>
+    </button>
   </div>
 </footer>
+
+<!-- =========================================================
+     WHATSAPP FLOATING BUTTON
+========================================================= -->
+<a href="https://wa.me/201149004015?text=Hi%20Apex%20MUN%2C%20I%20have%20a%20question!" target="_blank" rel="noopener noreferrer" class="whatsapp-fab" aria-label="Chat with us on WhatsApp">
+  <i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<!-- =========================================================
+     MOBILE BOTTOM NAV
+========================================================= -->
+<nav class="bottom-nav" id="bottomNav">
+  <div class="bottom-nav-inner">
+    <a href="#" id="bottomNavDashboard" class="active">
+      <i class="fa-solid fa-house"></i>
+      <span lang-target="en">Home</span><span lang-target="ar">الرئيسية</span>
+    </a>
+    <a href="#" id="bottomNavApply">
+      <i class="fa-solid fa-file-signature"></i>
+      <span lang-target="en">Apply</span><span lang-target="ar">التقديم</span>
+    </a>
+    <a href="#" id="bottomNavQuiz">
+      <i class="fa-solid fa-clipboard-question"></i>
+      <span lang-target="en">Am I Eligible?</span><span lang-target="ar">هل أنا مؤهل؟</span>
+    </a>
+    <a href="https://wa.me/201149004015" target="_blank" rel="noopener noreferrer">
+      <i class="fa-brands fa-whatsapp"></i>
+      <span lang-target="en">Contact</span><span lang-target="ar">تواصل</span>
+    </a>
+  </div>
+</nav>
+
+<!-- =========================================================
+     ELIGIBILITY QUIZ MODAL
+========================================================= -->
+<div class="simple-modal" id="quizModal">
+  <div class="simple-modal-backdrop" id="quizModalBackdrop"></div>
+  <div class="simple-modal-card">
+    <h3 class="font-display font-semibold text-xl text-gold-light mb-2">
+      <span lang-target="en">Am I Eligible?</span><span lang-target="ar">هل أنا مؤهل للتقديم؟</span>
+    </h3>
+    <p class="text-sm text-silver/60 mb-6">
+      <span lang-target="en">Answer 3 quick questions to see if Apex MUN is right for you.</span>
+      <span lang-target="ar">جاوب على 3 أسئلة سريعة عشان تعرف لو Apex MUN مناسب لك.</span>
+    </p>
+    <div id="quizBody" class="space-y-5"></div>
+    <div id="quizResult" class="hidden mt-6 rounded-2xl border border-gold/30 bg-gold/10 p-5 text-center"></div>
+    <button type="button" id="quizModalClose" class="mt-6 w-full rounded-full border border-gold/30 py-3 text-sm text-silver/70 hover:text-gold-light hover:border-gold/60 transition">
+      <span lang-target="en">Close</span><span lang-target="ar">إغلاق</span>
+    </button>
+  </div>
+</div>
+
+<!-- =========================================================
+     PRIVACY POLICY MODAL
+========================================================= -->
+<div class="simple-modal" id="privacyModal">
+  <div class="simple-modal-backdrop" id="privacyModalBackdrop"></div>
+  <div class="simple-modal-card">
+    <h3 class="font-display font-semibold text-xl text-gold-light mb-4">
+      <span lang-target="en">Privacy Policy &amp; Terms</span><span lang-target="ar">سياسة الخصوصية والشروط</span>
+    </h3>
+    <div class="text-sm text-silver/70 leading-relaxed space-y-3 max-h-[50vh] overflow-y-auto pr-1">
+      <p lang-target="en">Apex MUN collects the information you submit through our registration form (name, email, phone, essay answers, video link) solely to evaluate applications, allocate committees, and communicate with delegates and their schools.</p>
+      <p lang-target="ar">يجمع Apex MUN البيانات اللي بتدخلها في فورم التسجيل (الاسم، الإيميل، الهاتف، إجابات المقال، رابط الفيديو) فقط لتقييم الطلبات وتوزيع اللجان والتواصل مع المندوبين ومدارسهم.</p>
+      <p lang-target="en">We do not sell or share your personal data with third parties outside our organizing team, academic chairs, and partner schools/education directorates involved in running the conference.</p>
+      <p lang-target="ar">إحنا مبنبيعش ولا بنشارك بياناتك الشخصية مع أي جهة خارج فريق التنظيم والمشرفين الأكاديميين والمدارس/الإدارات التعليمية الشريكة المسؤولة عن تنظيم المؤتمر.</p>
+      <p lang-target="en">You may request access to, correction of, or deletion of your data at any time by emailing apexmun.info@gmail.com.</p>
+      <p lang-target="ar">تقدر تطلب الاطلاع على بياناتك أو تعديلها أو حذفها في أي وقت عن طريق مراسلتنا على apexmun.info@gmail.com.</p>
+    </div>
+    <button type="button" id="privacyModalClose" class="mt-6 w-full rounded-full border border-gold/30 py-3 text-sm text-silver/70 hover:text-gold-light hover:border-gold/60 transition">
+      <span lang-target="en">Close</span><span lang-target="ar">إغلاق</span>
+    </button>
+  </div>
+</div>
 
 <script>
   // wireframe pyramid draw-in
@@ -1150,15 +1807,21 @@
   const successModal = document.getElementById('successModal');
 
   const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const VIDEO_RE = /^https?:\/\/(www\.)?(youtu\.be|youtube\.com|drive\.google\.com)\//i;
 
   const validators = {
     fullName: (v) => (v.trim().length >= 2 ? '' : 'Please enter your full name.'),
     email: (v) => (EMAIL_RE.test(v.trim()) ? '' : 'Enter a valid email address.'),
     phone: (v) => (v.replace(/\D/g, '').length >= 7 ? '' : 'Enter a valid phone number.'),
     experience: (v) => (v ? '' : 'Please select your experience level.'),
-    essay: (v) => (v.trim() ? '' : 'Please write your diplomatic perspective essay.'),
+    essay1: (v) => (v.trim() ? '' : 'Please answer this question.'),
+    essay2: (v) => (v.trim() ? '' : 'Please answer this question.'),
+    essay3: (v) => (v.trim() ? '' : 'Please answer this question.'),
+    essay4: (v) => (v.trim() ? '' : 'Please answer this question.'),
+    essay5: (v) => (v.trim() ? '' : 'Please answer this question.'),
     firstChoice: (v) => (v ? '' : 'Please select your first choice committee.'),
     secondChoice: (v) => (v ? '' : 'Please select your second choice committee.'),
+    videoLink: (v) => (VIDEO_RE.test(v.trim()) ? '' : 'Please paste a valid YouTube or Google Drive link.'),
   };
 
   function setFieldError(name, msg) {
@@ -1215,6 +1878,8 @@
     switchView('view-dashboard');
   });
 
+  const RECAPTCHA_SITE_KEY = '6Ld5DXwtAAAAAIJzktyePesVmilNqjdJE-Etsx8F';
+
   registrationForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     formError.classList.add('hidden');
@@ -1235,6 +1900,20 @@
     toggleSubmitting(true);
 
     try {
+      // reCAPTCHA v3 — invisible, runs in the background and scores this
+      // submission 0 (likely bot) to 1 (likely human). The score itself is
+      // verified server-side in Make.com using the secret key, since that
+      // check can't be trusted if done only in the browser.
+      const recaptchaToken = await new Promise((resolve, reject) => {
+        if (typeof grecaptcha === 'undefined') return reject(new Error('reCAPTCHA failed to load.'));
+        grecaptcha.ready(() => {
+          grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: 'submit_application' })
+            .then(resolve)
+            .catch(reject);
+        });
+      });
+      formData.append('recaptchaToken', recaptchaToken);
+
       // no-cors: Make.com's webhook doesn't send CORS headers back, so we
       // can't read the response — just fire the request. A thrown error here
       // means the network request itself failed (offline, DNS, etc.), not a
@@ -1249,6 +1928,175 @@
       formError.classList.remove('hidden');
     } finally {
       toggleSubmitting(false);
+    }
+  });
+
+  // ===========================================================
+  // LANGUAGE TOGGLE (EN / AR)
+  // ===========================================================
+  const langToggle = document.getElementById('langToggle');
+  langToggle.addEventListener('click', () => {
+    const isArabic = document.documentElement.getAttribute('dir') === 'rtl';
+    if (isArabic) {
+      document.documentElement.removeAttribute('dir');
+      document.documentElement.setAttribute('lang', 'en');
+      langToggle.textContent = 'EN';
+    } else {
+      document.documentElement.setAttribute('dir', 'rtl');
+      document.documentElement.setAttribute('lang', 'ar');
+      langToggle.textContent = 'AR';
+    }
+  });
+
+  // ===========================================================
+  // MOBILE BOTTOM NAV
+  // ===========================================================
+  document.getElementById('bottomNavDashboard').addEventListener('click', (e) => {
+    e.preventDefault();
+    switchView('view-dashboard');
+  });
+  document.getElementById('bottomNavApply').addEventListener('click', (e) => {
+    e.preventDefault();
+    switchView('view-form');
+  });
+  document.getElementById('bottomNavQuiz').addEventListener('click', (e) => {
+    e.preventDefault();
+    openQuizModal();
+  });
+
+  // ===========================================================
+  // PRIVACY POLICY MODAL
+  // ===========================================================
+  const privacyModal = document.getElementById('privacyModal');
+  document.getElementById('openPrivacyBtn').addEventListener('click', () => privacyModal.classList.add('open'));
+  document.getElementById('privacyModalClose').addEventListener('click', () => privacyModal.classList.remove('open'));
+  document.getElementById('privacyModalBackdrop').addEventListener('click', () => privacyModal.classList.remove('open'));
+
+  // ===========================================================
+  // ELIGIBILITY QUIZ MODAL
+  // ===========================================================
+  const quizModal = document.getElementById('quizModal');
+  const quizBody = document.getElementById('quizBody');
+  const quizResult = document.getElementById('quizResult');
+
+  const QUIZ_QUESTIONS = [
+    {
+      en: 'Are you currently enrolled in school (any grade)?',
+      ar: 'هل انت طالب مقيّد في مدرسة حاليًا (أي صف)؟',
+    },
+    {
+      en: 'Are you comfortable speaking or writing in English?',
+      ar: 'مرتاح تتكلم أو تكتب بالإنجليزية؟',
+    },
+    {
+      en: 'Are you willing to research a global issue and debate it respectfully?',
+      ar: 'مستعد تبحث في قضية عالمية وتناقشها باحترام؟',
+    },
+  ];
+
+  function renderQuiz() {
+    quizBody.innerHTML = '';
+    quizResult.classList.add('hidden');
+    QUIZ_QUESTIONS.forEach((q, i) => {
+      const wrap = document.createElement('div');
+      wrap.innerHTML = `
+        <p class="text-sm text-silver/80 mb-2"><span lang-target="en">${q.en}</span><span lang-target="ar">${q.ar}</span></p>
+        <div class="flex gap-3">
+          <button type="button" data-q="${i}" data-v="1" class="quiz-opt flex-1 rounded-xl border border-gold/25 py-2 text-sm text-silver/70 hover:border-gold/60 hover:text-gold-light transition"><span lang-target="en">Yes</span><span lang-target="ar">أيوه</span></button>
+          <button type="button" data-q="${i}" data-v="0" class="quiz-opt flex-1 rounded-xl border border-gold/25 py-2 text-sm text-silver/70 hover:border-gold/60 hover:text-gold-light transition"><span lang-target="en">No</span><span lang-target="ar">لأ</span></button>
+        </div>`;
+      quizBody.appendChild(wrap);
+    });
+  }
+
+  const quizAnswers = {};
+  quizBody.addEventListener('click', (e) => {
+    const btn = e.target.closest('.quiz-opt');
+    if (!btn) return;
+    quizAnswers[btn.dataset.q] = Number(btn.dataset.v);
+    quizBody.querySelectorAll(`[data-q="${btn.dataset.q}"]`).forEach((b) => b.classList.remove('border-gold', 'text-gold-light'));
+    btn.classList.add('border-gold', 'text-gold-light');
+
+    if (Object.keys(quizAnswers).length === QUIZ_QUESTIONS.length) {
+      const score = Object.values(quizAnswers).reduce((a, b) => a + b, 0);
+      const eligible = score >= 2;
+      quizResult.classList.remove('hidden');
+      quizResult.innerHTML = eligible
+        ? `<p class="text-gold-light font-semibold"><span lang-target="en">🎉 You're eligible! We'd love to see you apply.</span><span lang-target="ar">🎉 مؤهل تمامًا! يشرفنا إنك تقدّم.</span></p>`
+        : `<p class="text-silver/70"><span lang-target="en">You may still apply — our team reviews every application individually.</span><span lang-target="ar">لسه تقدر تقدّم — فريقنا بيراجع كل طلب بشكل فردي.</span></p>`;
+    }
+  });
+
+  function openQuizModal() {
+    Object.keys(quizAnswers).forEach((k) => delete quizAnswers[k]);
+    renderQuiz();
+    quizModal.classList.add('open');
+  }
+
+  document.getElementById('quizModalClose').addEventListener('click', () => quizModal.classList.remove('open'));
+  document.getElementById('quizModalBackdrop').addEventListener('click', () => quizModal.classList.remove('open'));
+
+  // ===========================================================
+  // PARTICIPATING COUNTRIES GRID
+  // ===========================================================
+  const COUNTRIES = [
+    { flag: '🇪🇬', name: 'Egypt' }, { flag: '🇺🇸', name: 'United States' }, { flag: '🇬🇧', name: 'United Kingdom' },
+    { flag: '🇫🇷', name: 'France' }, { flag: '🇩🇪', name: 'Germany' }, { flag: '🇯🇵', name: 'Japan' },
+    { flag: '🇧🇷', name: 'Brazil' }, { flag: '🇮🇳', name: 'India' }, { flag: '🇿🇦', name: 'South Africa' },
+    { flag: '🇸🇦', name: 'Saudi Arabia' }, { flag: '🇦🇪', name: 'UAE' }, { flag: '🇨🇳', name: 'China' },
+    { flag: '🇷🇺', name: 'Russia' }, { flag: '🇨🇦', name: 'Canada' }, { flag: '🇦🇺', name: 'Australia' },
+  ];
+  const countryGrid = document.getElementById('countryGrid');
+  COUNTRIES.forEach((c) => {
+    const el = document.createElement('div');
+    el.className = 'w-14 h-14 rounded-full border border-gold/25 bg-white/[0.03] flex items-center justify-center text-2xl hover:border-gold/60 hover:-translate-y-1 transition cursor-default';
+    el.title = c.name;
+    el.textContent = c.flag;
+    countryGrid.appendChild(el);
+  });
+
+  // ===========================================================
+  // FAQ ACCORDION
+  // ===========================================================
+  document.querySelectorAll('.faq-item').forEach((item) => {
+    const question = item.querySelector('.faq-question');
+    const answer = item.querySelector('.faq-answer');
+    question.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach((other) => {
+        other.classList.remove('open');
+        other.querySelector('.faq-answer').style.maxHeight = null;
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        answer.style.maxHeight = answer.scrollHeight + 24 + 'px';
+      }
+    });
+  });
+
+  // ===========================================================
+  // INVITE YOUR SCHOOL — copy letter / referral link
+  // ===========================================================
+  const INVITE_LETTER_EN = `Dear Principal,\n\nI would like to nominate our school to take part in Apex MUN 2026, a fully online Model United Nations program run in partnership with Levely Group and the UWC Scholarship Program.\n\nApex MUN gives students the chance to represent countries in realistic diplomatic simulations, building public speaking, negotiation, and critical thinking skills — completely free of charge for government school delegates.\n\nYou can learn more and register at: ${location.origin}\n\nThank you for considering this opportunity for our students.\n\nKind regards,`;
+
+  document.getElementById('copyInviteLetterBtn').addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(INVITE_LETTER_EN);
+      showToast(document.documentElement.getAttribute('dir') === 'rtl' ? 'تم نسخ خطاب الدعوة!' : 'Invitation letter copied!');
+    } catch {
+      showToast('Could not copy — please try again.');
+    }
+  });
+
+  document.getElementById('shareReferralBtn').addEventListener('click', async (e) => {
+    e.preventDefault();
+    const refCode = 'friend' + Math.floor(Math.random() * 9000 + 1000);
+    const refLink = `${location.origin}${location.pathname}?ref=${refCode}`;
+    try {
+      await navigator.clipboard.writeText(refLink);
+      showToast(document.documentElement.getAttribute('dir') === 'rtl' ? 'تم نسخ رابط الإحالة!' : 'Referral link copied!');
+    } catch {
+      showToast('Could not copy — please try again.');
     }
   });
 </script>
