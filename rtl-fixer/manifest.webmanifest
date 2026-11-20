@@ -1,0 +1,20 @@
+{
+  "name": "APEX RTL Fixer",
+  "short_name": "RTL Fixer",
+  "description": "Fix Arabic–English text direction privately.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#090f20",
+  "theme_color": "#090f20",
+  "lang": "ar",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
